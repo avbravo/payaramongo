@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <p:growl id="msg"/> 
+      GET DATA MONGODB
+        <br />
+        mongodb
+        <br></br>
+        <p:panelGrid columns="2" id="panel">
+            <p:outputLabel value="id"/>
+            <p:fieldset>
+                 <p:inputText value="#{personController.person.id}" id="lid"/>
+                  <p:commandButton value="Find" action="#{personController.find()}"
+                                    process="@this, lid"
+                         update="datatable,msg,panel"/>
+                 <p:commandButton value="Delete" action="#{personController.delete()}"
+                                    process="@this, lid"
+                         update="datatable,msg,panel"/>
+                
+            </p:fieldset>
+           
+            <p:outputLabel value="name"/>
+            <p:inputText value="#{personController.person.name}" id="lname"/>
+            <p:outputLabel value="age"/>
+            <p:inputText value="#{personController.person.age}" id="lage"/>
+            <f:facet name="footer">
+                   <p:commandButton value="Save" action="#{personController.save()}"
+                                    process="@this, lid, lname, lage"
+                         update="datatable,msg"/>
+            </f:facet>
+        </p:panelGrid>
+       
+          <h:panelGrid columns="6" cellpadding="5">
+         <p:commandButton value="FindAll" action="#{personController.findAll()}"   process="@this"  update="datatable, msg"/>
+    </h:panelGrid>
+        <p:dataTable value="#{personController.personList}"
+                     id="datatable"
+                     paginator="true"
+                     rows="15"
+                     var="person">
+            <p:column headerText="id">
+                <p:outputLabel value="#{person.id}"/>
+            </p:column>
+            <p:column headerText="name">
+                <p:outputLabel value="#{person.name}"/>
+            </p:column>
+            <p:column headerText="age">
+                <p:outputLabel value="#{person.age}"/>
+            </p:column>
+        </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+
